@@ -61,18 +61,39 @@ return
 
       local lspconfig = require('lspconfig') -- lsp
 
+      local capabilities = require("cmp_nvim_lsp").default_capabilities()
+
+
+
+      -- eclipse.jdtls java lsp
+      vim.lsp.enable('jdtls')
+      vim.lsp.config('jdtls', {
+        cmd = { '/usr/bin/jdtls' },
+        root_dir = vim.fs.dirname(vim.fs.find({ 'gradlew', '.git', 'mvnw' }, { upward = true })[1]),
+      })
+      -- lua_ls lsp lua
+      vim.lsp.enable('lua_ls')
+      vim.lsp.config('lua_ls', {
+        settings = {
+          Lua = {
+            runtime = {
+              version = "LuaJIT"
+            }
+          }
+        }
+      })
       -- rust (rust-analyzer lsp)
       vim.lsp.enable('rust-analyzer')
       vim.lsp.config('rust_analyzer', {
         settings = {
-            ['rust-analyzer'] = {},
+          ['rust-analyzer'] = {},
         },
       })
 
       -- python lsp (pyright)
       vim.lsp.enable('pyright')
       vim.lsp.config('pyright', {
-        cmd = {"pyright-langserver", "--stdio"},
+        cmd = { "pyright-langserver", "--stdio" },
       })
       -- C/C++ (clang)
       vim.lsp.enable('clangd')
@@ -88,8 +109,6 @@ return
           }
         }
       })
-      local capabilities = require("cmp_nvim_lsp").default_capabilities()
-
     end
   },
   {

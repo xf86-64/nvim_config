@@ -1,5 +1,3 @@
-local setup_lsp_keymaps = require("configs.keymaps").setup_lsp_keymaps
-
 return
 {
   {
@@ -69,7 +67,8 @@ return
       vim.lsp.enable('jdtls')
       vim.lsp.config('jdtls', {
         cmd = { '/usr/bin/jdtls' },
-        root_dir = vim.fs.dirname(vim.fs.find({ 'gradlew', '.git', 'mvnw' }, { upward = true })[1]),
+        root_dir = vim.fs.dirname(vim.fs.find({ 'gradlew', '.git', 'mvnw' }, { upward = true })
+          [1]),
       })
       -- lua_ls lsp lua
       vim.lsp.enable('lua_ls')
@@ -82,14 +81,14 @@ return
           }
         }
       })
+
       -- rust (rust-analyzer lsp)
       vim.lsp.enable('rust-analyzer')
       vim.lsp.config('rust_analyzer', {
-        settings = {
-          ['rust-analyzer'] = {},
-        },
+        cmd = { 'rust-analyzer' },
+        filetypes = { 'rust' },
+        single_file_support = true,
       })
-
       -- python lsp (pyright)
       vim.lsp.enable('pyright')
       vim.lsp.config('pyright', {
@@ -119,6 +118,36 @@ return
 
   },
   {
+    'numToStr/Comment.nvim',
+    opts =
+    {
+
+      padding = true,
+      sticky = true,
+      ignore = nil,
+      toggler = {
+
+        line = 'gcc',
+        block = 'gbc',
+      },
+      opleader = {
+        line = 'gc',
+        block = 'gb',
+      },
+      extra = {
+        above = 'gc0',
+        below = 'gco',
+        eol = 'gcA',
+      },
+      mappings = {
+        basic = true,
+        extra = true,
+      },
+      pre_hook = nil,
+      post_hook = nil,
+    },
+  },
+  {
     "nvim-lualine/lualine.nvim",
     dependencies = 'nvim-tree/nvim-web-devicons',
     config = function()
@@ -135,7 +164,8 @@ return
                 return ''
               end,
               cond = function()
-                return vim.opt.iminsert:get() > 0 and vim.b.keymap_name ~= nil
+                return vim.opt.iminsert:get() > 0 and
+                    vim.b.keymap_name ~= nil
               end,
             },
             'encoding',
